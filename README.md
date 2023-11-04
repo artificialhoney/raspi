@@ -24,7 +24,7 @@ ansible_ssh_pass=__password__
 
 `ansible-playbook ansible/audiobox.yml`
 
-Tested with a `Raspberry Pi OS Lite (32-bit)` on a __Pi B+__ with an __Edimax EW-7611ULB 2- in 1 Wireless & Bluetooth nano USB Adapter__ and a __UGREEN USB Stereo Audio Adapter__.
+Tested with a `Raspberry Pi OS Lite (32-bit) - port of Debian Bookworm` on a __Pi B+__ with an __Edimax EW-7611ULB 2- in 1 Wireless & Bluetooth nano USB Adapter__ and a __UGREEN USB Stereo Audio Adapter__.
 
 ![Audiobox](docs/img/audiobox.jpg)
 

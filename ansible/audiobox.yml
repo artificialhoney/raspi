@@ -37,7 +37,7 @@
               - bluez-tools
               - alsa-base
               - alsa-utils
-              - bluealsa
+              - bluez-alsa-utils
               - bluez-tools
             state: present
             update_cache: true
@@ -185,14 +185,14 @@
         - spotify
       become: true
       block:
-        - name: Download package
+        - name: Download installation package
           ansible.builtin.get_url:
             url: "{{ raspotify_url }}"
             dest: "/home/{{ ansible_env.USER }}/raspotify.deb"
         - name: Install package
           ansible.builtin.apt:
             deb: "/home/{{ ansible_env.USER }}/raspotify.deb"
-        - name: Remove package
+        - name: Remove installation package
           ansible.builtin.file:
             path: "/home/{{ ansible_env.USER }}/raspotify.deb"
             state: absent
