@@ -176,13 +176,13 @@
         - name: Config
           ansible.builtin.lineinfile:
             dest: /etc/shairport-sync.conf
-            regexp: \tname = ".+"
-            line: \tname="{{ pretty_hostname }}"
+            regexp: name = ".+"
+            line: name="{{ pretty_hostname }}"
         - name: Config
           ansible.builtin.lineinfile:
             dest: /etc/shairport-sync.conf
-            regexp: \tinterpolation = "auto
-            line: \tinterpolation = "basic
+            regexp: interpolation = "auto"
+            line: interpolation = "basic"
         - name: Enable Service
           ansible.builtin.systemd:
             name: shairport-sync
@@ -215,7 +215,7 @@
               }
             - {
                 search_string: '#LIBRESPOT_NAME="Librespot',
-                line: 'LIBRESPOT_NAME="{{ pretty_hostname }}',
+                line: 'LIBRESPOT_NAME="{{ pretty_hostname }}"',
               }
             - {
                 search_string: '#LIBRESPOT_BITRATE="160"',
@@ -223,7 +223,7 @@
               }
             - {
                 search_string: "#LIBRESPOT_DEVICE_TYPE",
-                line: "LIBRESPOT_DEVICE_TYPE:",
+                line: "LIBRESPOT_DEVICE_TYPE",
               }
             - {
                 search_string: '#LIBRESPOT_INITIAL_VOLUME="50"',
