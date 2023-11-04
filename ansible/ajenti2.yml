@@ -53,6 +53,10 @@
           - ajenti.plugin.services
           - ajenti.plugin.settings
           - ajenti.plugin.terminal
+    - name: Config
+      ansible.builtin.blockinfile:
+        dest: /etc/ajenti/config.yml
+        content: "restricted_user: {{ ansible_env.USER }}"
     - name: Service
       become: true
       ansible.builtin.copy:
