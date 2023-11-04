@@ -86,6 +86,7 @@
         - name: Enable Service
           ansible.builtin.systemd:
             name: bt-agent@hci0.service
+            enabled: true
             state: started
         - name: ALSA
           ansible.builtin.lineinfile:
