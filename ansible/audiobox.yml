@@ -223,7 +223,7 @@
               }
             - {
                 search_string: "#LIBRESPOT_DEVICE_TYPE",
-                line: "LIBRESPOT_DEVICE_TYPE",
+                line: "LIBRESPOT_DEVICE_TYPE=",
               }
             - {
                 search_string: '#LIBRESPOT_INITIAL_VOLUME="50"',

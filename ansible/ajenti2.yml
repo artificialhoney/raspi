@@ -12,6 +12,7 @@
         pkg:
           - build-essential
           - python3-pip
+          - python3-venv
           - python3-dev
           - python3-lxml
           - libssl-dev
@@ -22,8 +23,17 @@
         state: present
         update_cache: true
         install_recommends: false
+    - name: Create venv
+      become: true
+      ansible.builtin.shell:
+        cmd: python3 -m venv /opt/ajenti --system-site-packages && source /opt/ajenti/bin/activate
+        executable: /bin/bash
+      register: output
+      changed_when: output.rc != 0
     - name: Install ajenti2
+      become: true
       ansible.builtin.pip:
+        virtualenv: /opt/ajenti
         name:
           - ajenti-panel
           - ajenti.plugin.ace
