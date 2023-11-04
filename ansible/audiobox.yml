@@ -26,6 +26,12 @@
       ansible.builtin.apt:
         upgrade: true
         update_cache: true
+    - name: Blacklist onboard sound
+      ansible.builtin.copy:
+        dest: /etc/modprobe.d/alsa-blacklist.conf
+        content: |
+          blacklist snd_bcm2835
+        mode: "0600"
     - name: Bluetooth
       tags:
         - bluetooth
