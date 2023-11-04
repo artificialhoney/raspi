@@ -53,3 +53,28 @@
           - ajenti.plugin.services
           - ajenti.plugin.settings
           - ajenti.plugin.terminal
+    - name: Service
+      become: true
+      ansible.builtin.copy:
+        dest: /lib/systemd/system/ajenti.service
+        content: |
+          [Unit]
+          Description=Ajenti panel
+          After=network.target
+
+          [Service]
+          Type=forking
+          PIDFile=/var/run/ajenti.pid
+          ExecStart=/opt/ajenti/bin/ajenti-panel -d
+          ExecStartPost=/bin/sleep 5
+
+          [Install]
+          WantedBy=multi-user.target
+        mode: "0600"
+    - name: Enable Service
+      become: true
+      ansible.builtin.systemd:
+        name: ajenti.service
+        enabled: true
+        daemon_reload: true
+        state: started
