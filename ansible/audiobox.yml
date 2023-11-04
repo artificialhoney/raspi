@@ -9,7 +9,6 @@
       tags:
         - bluetooth
         - airplay
-        - spotify
         - snapcast
       become: true
       ansible.builtin.shell:
@@ -18,15 +17,18 @@
       register: output
       changed_when: output.rc != 0
     - name: Update and upgrade
+      tags:
         - bluetooth
         - airplay
-        - spotify
         - snapcast
       become: true
       ansible.builtin.apt:
         upgrade: true
         update_cache: true
     - name: Blacklist onboard sound
+        - bluetooth
+        - airplay
+        - snapcast
       ansible.builtin.copy:
         dest: /etc/modprobe.d/alsa-blacklist.conf
         content: |
@@ -35,6 +37,8 @@
     - name: Bluetooth
       tags:
         - bluetooth
+        - airplay
+        - snapcast
       become: true
       block:
         - name: Install packages
@@ -187,56 +191,6 @@
           ansible.builtin.systemd:
             name: shairport-sync
             state: started
-    - name: Spotify
-      tags:
-        - spotify
-      become: true
-      block:
-        - name: Download installation package
-          ansible.builtin.get_url:
-            url: "{{ raspotify_url }}"
-            dest: "/home/{{ ansible_env.USER }}/raspotify.deb"
-        - name: Install package
-          ansible.builtin.apt:
-            deb: "/home/{{ ansible_env.USER }}/raspotify.deb"
-        - name: Remove installation package
-          ansible.builtin.file:
-            path: "/home/{{ ansible_env.USER }}/raspotify.deb"
-            state: absent
-        - name: Config
-          lineinfile:
-            dest: /etc/raspotify/conf
-            search_string: "{{ item.search_string }}"
-            line: "{{ item.line }}"
-          loop:
-            - {
-                search_string: "LIBRESPOT_ENABLE_VOLUME_NORMALISATION=",
-                line: "#LIBRESPOT_ENABLE_VOLUME_NORMALISATION=",
-              }
-            - {
-                search_string: '#LIBRESPOT_NAME="Librespot',
-                line: 'LIBRESPOT_NAME="{{ pretty_hostname }}"',
-              }
-            - {
-                search_string: '#LIBRESPOT_BITRATE="160"',
-                line: 'LIBRESPOT_BITRATE="320"',
-              }
-            - {
-                search_string: "#LIBRESPOT_DEVICE_TYPE",
-                line: "LIBRESPOT_DEVICE_TYPE=",
-              }
-            - {
-                search_string: '#LIBRESPOT_INITIAL_VOLUME="50"',
-                line: 'LIBRESPOT_INITIAL_VOLUME="20"',
-              }
-            - {
-                search_string: '#LIBRESPOT_VOLUME_CTRL="log"',
-                line: 'LIBRESPOT_VOLUME_CTRL="cubic"',
-              }
-        - name: Restart Service
-          ansible.builtin.systemd:
-            name: raspotify
-            state: restarted
     - name: Snapcast
       tags:
         - snapcast
@@ -253,7 +207,6 @@
       tags:
         - bluetooth
         - airplay
-        - spotify
         - snapcast
       become: true
       ansible.builtin.copy:
@@ -266,7 +219,6 @@
       tags:
         - bluetooth
         - airplay
-        - spotify
         - snapcast
       become: true
       ansible.builtin.reboot:
