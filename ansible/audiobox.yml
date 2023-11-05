@@ -29,6 +29,7 @@
         - bluetooth
         - airplay
         - snapcast
+      become: true
       ansible.builtin.copy:
         dest: /etc/modprobe.d/alsa-blacklist.conf
         content: |
